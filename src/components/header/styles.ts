@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Basis = styled.header`
   width: 100vw;
-	padding: 1.5rem 1.5rem 8rem;
+	padding: 2.5rem 1.5rem 7.5rem;
 	background-color: ${(props) => props.theme['gray-900']};
 
 	& nav {
@@ -31,6 +31,7 @@ export const Button = styled.button`
 
 	&:active {
 		background-color: ${(props) => props.theme['green-500']};
+		transition: background-color 0.25s;
 	}
 
   & > span {
@@ -52,6 +53,7 @@ export const Button = styled.button`
 
 		&:hover {
 			background-color: ${(props) => props.theme['green-500']};
+			transition: background-color 0.25s;
 		}
 	}
 `
