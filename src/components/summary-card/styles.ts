@@ -7,7 +7,7 @@ type SummaryCardBasisProps = {
 export const SummaryCardBasis = styled.div<SummaryCardBasisProps>`
   border-radius: 6px;
 	padding: 2rem;
-	width: 22rem;
+	flex: 1;
 
 	${props => !props.variant && css`
 		background-color: ${props.theme['gray-600']};
@@ -35,6 +35,17 @@ export const SummaryCardBasis = styled.div<SummaryCardBasisProps>`
 	}
 
 	@media(max-width:869px) {
-		width: 18rem;
+		flex: none;
+		width: 22rem;
+
+		&:not(&+div) {
+			margin-left: 12rem;
+		}
+	}
+
+	@media(max-width:721px) {
+		&:not(&+div) {
+			margin-left: 43rem !important;
+		}
 	}
 `

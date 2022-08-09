@@ -16,8 +16,6 @@ export const Wrapper = styled.div`
 	overflow-x: auto;
 
 	@media(max-width:869px) {
-		padding-left: 25rem;
-
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 

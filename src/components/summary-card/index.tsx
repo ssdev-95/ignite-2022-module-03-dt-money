@@ -9,6 +9,8 @@ type SummaryCardProps = {
 }
 
 export function SummaryCard({ children, title, ammount, variant }:SummaryCardProps) {
+  const signal = ammount < 0 ? '- $ ' : '$ '
+	const normalizedAmmount = ammount < 0 ? (ammount * (-1)) : ammount
 	return (
 	  <SummaryCardBasis variant={
 		  variant ?
@@ -20,7 +22,7 @@ export function SummaryCard({ children, title, ammount, variant }:SummaryCardPro
 				{ children }
 			</header>
 
-			<strong>US${ammount.toFixed(2)}</strong>
+			<strong>{`${signal}${normalizedAmmount.toFixed(2)}`}</strong>
 		</SummaryCardBasis>
 	)
 }
