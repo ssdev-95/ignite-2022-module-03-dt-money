@@ -21,4 +21,18 @@ export const GlobalStyle = createGlobalStyle`
 	body, input, text-area, button {
 		font: 400 1rem Roboto, sans-serif;
 	}
+
+	#root {
+		min-height: 100vh;
+	}
+
+	@media(max-width:869px) {
+		html {
+			font-size: 87.5%;
+		}
+	}
+
+	@media(max-width:411px) {
+		font-size: 81.25%;
+	}
 `
