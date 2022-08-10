@@ -1,4 +1,5 @@
 import { Calendar, TagSimple } from 'phosphor-react'
+import { SearchForm } from '../search-form'
 
 import {
   TransactionsTableContainer,
@@ -67,6 +68,7 @@ export function TransactionsTable() {
 	}
   return (
 	  <TransactionsTableContainer>
+		  <SearchForm />
 		  <TransactionsTableBasis>
 			  <tbody>
 				  {transactions.map(renderTransaction)}
