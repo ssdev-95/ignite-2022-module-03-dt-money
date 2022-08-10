@@ -17,7 +17,7 @@ export function Summary() {
 				ammount={3745.10}
 			>
 			  <ArrowCircleUp
-				  size={24}
+				  size={36}
 					color={theme['green-500']}
 				/>
 			</SummaryCard>
@@ -27,7 +27,7 @@ export function Summary() {
 				ammount={-1200.45}
 			>
 			  <ArrowCircleDown
-				  size={24}
+				  size={36}
 					color={theme['red-500']}
 				/>
 			</SummaryCard>
@@ -37,7 +37,7 @@ export function Summary() {
 				ammount={2544.65}
 				variant="total"
 			>
-			  <CurrencyDollar size={24} />
+			  <CurrencyDollar size={36} />
 			</SummaryCard>
 		</Wrapper>
 	)
