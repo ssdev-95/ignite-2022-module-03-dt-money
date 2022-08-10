@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import * as Dialog from '@radix-ui/react-dialog'
+import * as RadioGroup from '@radix-ui/react-radio-group'
 
 export const ModalOverlay = styled(Dialog.Overlay)`
   width: 100vw;
@@ -41,13 +42,6 @@ export const ModalContent = styled.form`
 		&::placeholder {
 		  color: ${(props) => props.theme['gray-500']};
 		}
-	}
-
-	div {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
-		margin-top: 0.5rem;
 	}
 
 	button[type="submit"] {
@@ -95,7 +89,7 @@ interface ButtonProps {
 	variant: 'income' | 'expense'
 }
 
-export const TransactionTypeButton = styled.button<ButtonProps>`
+export const TransactionTypeButton = styled(RadioGroup.Item)<ButtonProps>`
   padding: 1rem;
 	border-radius: 6px;
 	background-color: ${(props) => props.theme['gray-700']};
@@ -109,24 +103,48 @@ export const TransactionTypeButton = styled.button<ButtonProps>`
 	  color: ${(props) => props.theme.white};
 		font-size: 1rem;
 	}
-
-	svg {
-		${(props) => props.variant === 'income' && css`
-			color: ${props.theme['green-500']};
-		`}
-
-		${(props) => props.variant === 'expense' && css`
-			color: ${props.theme['red-500']};
-		`}
-	}
-
-	&:active {
-		background-color: ${(props) => props.theme['gray-600']};
-	}
-
-	@media(min-width:870px) {
-		&:hover {
+	
+	@media(min-width: 870px) {
+		&[data-state='unchecked']:hover {
 			background-color: ${(props) => props.theme['gray-600']};
-		}                                                 
+			transition: background-color 0.25s;
+		}
 	}
+
+	${(props) => props.variant === 'income' && css`
+		svg {
+			color: ${props.theme['green-500']};
+		}
+
+		&[data-state='checked'] {
+			background-color: ${props.theme['green-500']};
+			color: ${props.theme.white};
+
+			svg {
+				color: ${props.theme.white};
+			}
+		}
+	`}
+
+	${(props) => props.variant === 'expense' && css`
+		svg {
+			color: ${props.theme['red-500']};
+		}
+
+		&[data-state='checked'] {
+			background-color: ${props.theme['red-500']};
+			color: ${props.theme.white};
+
+			svg {
+				color: ${props.theme.white};
+			}
+		}
+	`}
+`
+
+export const TransactionTypeContainer = styled(RadioGroup.Root)`
+  display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
+	margin-top: 0.5rem;
 `

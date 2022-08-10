@@ -1,7 +1,8 @@
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { ArrowCircleDown, ArrowCircleUp, X as IconX } from 'phosphor-react'
 import {
+  TransactionTypeContainer,
   TransactionTypeButton,
   ModalContainer,
 	ModalOverlay,
@@ -12,6 +13,8 @@ import {
 type ModalProps = {
   children:ReactNode
 }
+
+type Types = 'income' | 'expense'
 
 export function Modal( {children }: ModalProps) {
   return (
@@ -37,10 +40,10 @@ export function Modal( {children }: ModalProps) {
 						<input placeholder="Ammount without signal" />
 						<input placeholder="Category" />
 
-						<div>
+						<TransactionTypeContainer>
 						  <TransactionTypeButton
 							  variant="income"
-								type="button"
+								value="income"
 							>
 							  <ArrowCircleUp size={24} />
 							  <span>Icome</span>
@@ -48,12 +51,12 @@ export function Modal( {children }: ModalProps) {
 
 							<TransactionTypeButton
 							  variant="expense"
-								type="button"
+								value="expense"
 							>
 							  <ArrowCircleDown size={24} />
 							  <span>Expense</span>
 							</TransactionTypeButton>
-						</div>
+						</TransactionTypeContainer>
 
 						<button type="submit">Register</button>
 					</ModalContent>
