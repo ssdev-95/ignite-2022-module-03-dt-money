@@ -32,32 +32,44 @@ export const ModalContent = styled.form`
 	margin: 1rem 0;
 
 	input {
-		height: 2.8rem;
+		padding: 1rem;
 		border: 0;
 		border-radius: 6px;
 		color: ${(props) => props.theme.white};
 		background-color: ${(props) => props.theme['gray-900']};
-		text-indent: 1rem;
 
 		&::placeholder {
 		  color: ${(props) => props.theme['gray-500']};
 		}
 	}
 
-	button {
-		height: 2.8rem;
-		border: 0;
+	button[type="submit"] {
+		height: 58px;
 		border-radius: 6px;
 
 		background-color: ${(props) => props.theme['green-300']};
 		color: ${(props) => props.theme.white};
 		font-weight: 700;
 		font-size: 1rem;
+
+		margin-top: 1.5rem;
 	}
 `
 
 export const CloseButton = styled(Dialog.Close)`
   background-color: transparent;
 	border: 0;
+
 	color: ${(props) => props.theme['gray-500']};
+	line-height: 0;
+
+	position: absolute;
+	top: 1.5rem;
+	right: 1.5rem;
+
+	@media(min-width:870px) {
+		&::hover {
+			color: ${(props) => props.theme['green-500']};
+		}
+	}
 `

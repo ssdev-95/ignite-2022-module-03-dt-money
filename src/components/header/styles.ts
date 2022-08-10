@@ -26,7 +26,6 @@ export const Button = styled.button`
 	width: 3rem;
 
 	border-radius: 0.25rem;
-	border: 0;
 	background: ${(props) => props.theme['green-300']};
 
 	&:active {
@@ -34,8 +33,10 @@ export const Button = styled.button`
 		transition: background-color 0.25s;
 	}
 
-  & > span {
-		@media(max-width:869px) {
+	@media(max-width:869px) {
+		line-height: 0;
+
+		& > span {
 			display: none;
 		}
 	}

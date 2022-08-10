@@ -12,8 +12,7 @@ export const FormContainer = styled.form`
 
 	input {
 		flex: 1;
-		height: 3.1rem;
-		padding: 0 1rem;
+		padding: 1rem;
 		background-color: ${(props) => props.theme['gray-900']};
 		border: 0;
 		border-radius: 6px;
@@ -48,6 +47,14 @@ export const SearchButton = styled.button`
 		transition: background-color 0.25s, border-color 0.25s, color 0.25s;
 	}
 
+	@media(max-width:869px) {
+		line-height: 0;
+
+		& > span {
+			display: none;
+		}
+	}
+
 	@media(min-width:870px) {
 		&:hover {
 			border-color: ${(props) => props.theme['green-500']};
@@ -57,12 +64,6 @@ export const SearchButton = styled.button`
 			color: ${(props) => props.theme.white};
 
 			transition: background-color 0.25s, border-color 0.25s, color 0.25s;
-		}
-	}
-
-  & > span {
-		@media(max-width:869px) {
-			display: none;
 		}
 	}
 `
