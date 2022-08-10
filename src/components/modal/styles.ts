@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import * as Dialog from '@radix-ui/react-dialog'
 
 export const ModalOverlay = styled(Dialog.Overlay)`
@@ -43,6 +43,13 @@ export const ModalContent = styled.form`
 		}
 	}
 
+	div {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		margin-top: 0.5rem;
+	}
+
 	button[type="submit"] {
 		height: 58px;
 		border-radius: 6px;
@@ -53,6 +60,16 @@ export const ModalContent = styled.form`
 		font-size: 1rem;
 
 		margin-top: 1.5rem;
+
+		&:active {
+			background-color: ${(props) => props.theme['green-500']};
+		}
+
+		@media(min-width:870px) {
+			&:hover {
+				background-color: ${(props) => props.theme['green-500']};
+			}
+		}
 	}
 `
 
@@ -68,8 +85,48 @@ export const CloseButton = styled(Dialog.Close)`
 	right: 1.5rem;
 
 	@media(min-width:870px) {
-		&::hover {
+		&:hover {
 			color: ${(props) => props.theme['green-500']};
 		}
+	}
+`
+
+interface ButtonProps {
+	variant: 'income' | 'expense'
+}
+
+export const TransactionTypeButton = styled.button<ButtonProps>`
+  padding: 1rem;
+	border-radius: 6px;
+	background-color: ${(props) => props.theme['gray-700']};
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+
+	span {
+	  color: ${(props) => props.theme.white};
+		font-size: 1rem;
+	}
+
+	svg {
+		${(props) => props.variant === 'income' && css`
+			color: ${props.theme['green-500']};
+		`}
+
+		${(props) => props.variant === 'expense' && css`
+			color: ${props.theme['red-500']};
+		`}
+	}
+
+	&:active {
+		background-color: ${(props) => props.theme['gray-600']};
+	}
+
+	@media(min-width:870px) {
+		&:hover {
+			background-color: ${(props) => props.theme['gray-600']};
+		}                                                 
 	}
 `
