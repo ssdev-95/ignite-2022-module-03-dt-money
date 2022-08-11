@@ -1,23 +1,17 @@
-import { useContext } from 'react'
 import { Calendar, TagSimple } from 'phosphor-react'
 import { SearchForm } from '../search-form'
+import { formatAmmount, formatDate } from '../../utils/formatters'
 
-import {
-  TransactionsTableContainer,
-	TransactionsTableBasis,
-	PriceHighlight
-} from './styles'
+import { TransactionsTableContainer, TransactionsTableBasis, PriceHighlight } from './styles'
 
-import { TransactionsContext } from '../../contexts/transactions'
+import { useSummary } from '../../hooks/useSummary'
 import { DTMoney } from '../../@types/dt-money'
 
 type Transaction = DTMoney.Transaction
 
 export function TransactionsTable() {
-  const { transactions } = useContext(TransactionsContext)
+  const { transactions } = useSummary()
   const renderTransaction = (transaction: Transaction) => {
-	  const signal = transaction.type === 'expense' ? '-$ ' : '$ '
-	  const formatedWhen = new Intl.DateTimeFormat('en-US', { dateStyle:'medium'}).format(new Date(transaction.created_at))
 	  return (
 		  <tr key={transaction.id}>
 			  <td>
@@ -28,7 +22,7 @@ export function TransactionsTable() {
 				  <PriceHighlight variant={
 					  transaction.type
 					}>
-					  {`${signal}${transaction.ammount.toFixed(2)}`}
+					  {formatAmmount(transaction.ammount)}
 					</PriceHighlight>
 				</td>
 
@@ -42,7 +36,7 @@ export function TransactionsTable() {
 				<td>
 				  <span className="hasIcon">
 					  <Calendar size={24} />
-					  {formatedWhen}
+					  {formatDate(transaction.created_at)}
 					</span>
 				</td>
 			</tr>

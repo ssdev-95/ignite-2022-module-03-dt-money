@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useTheme } from 'styled-components'
 
 import {
@@ -8,39 +7,11 @@ import {
 import { SummaryCard } from '../summary-card'
 import { Wrapper } from './styles'
 
-import { TransactionsContext } from '../../contexts/transactions'
+import { useSummary } from '../../hooks/useSummary'
 
 export function Summary() {
   const theme = useTheme()
-	const { transactions } = useContext(TransactionsContext)
-
-  const total = transactions.reduce((acc, curr) => {
-	  if(curr.type === 'income'){
-		  return acc + curr.ammount
-		}
-
-		return acc - curr.ammount
-	}, 0)
-
-	const incomes = transactions.reduce((acc, curr) => {
-	  if(curr.type === 'expense') {
-		  return acc
-		}
-
-		return acc + curr.ammount
-	}, 0)
-
-	const expenses = transactions.reduce((acc, curr) => {
-	  if(curr.type === 'income') {
-		  return acc
-		}
-
-		return acc - curr.ammount
-	}, 0)
-
-	console.log('total: ',total)
-	console.log('incomes: ',incomes)
-	console.log('expenses: ',expenses)
+	const { incomes, expenses, total } = useSummary()
 
 	return (
 	  <Wrapper>
