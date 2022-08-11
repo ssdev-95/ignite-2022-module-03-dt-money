@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { Calendar, TagSimple } from 'phosphor-react'
 import { SearchForm } from '../search-form'
 
@@ -7,35 +8,16 @@ import {
 	PriceHighlight
 } from './styles'
 
-interface Transaction {
-  id: string
-	description: string
-	amount: number
-	category: string
-	type: 'income' | 'expense'
-	when: string
-}
+import { TransactionsContext } from '../../contexts/transactions'
+import { DTMoney } from '../../@types/dt-money'
 
-const transactions:Transaction[] = [{
-  id: 'k28fuwwufa9',
-	description: 'Waffles in RocketCoffee',
-	amount: 12.99,
-	category: 'Foods',
-	type: 'expense',
-	when: '2022-08-18T18:59:00Z'
-}, {
-  id: 'k28duddwn1iw',
-	description: 'Notebook at OLX',
-	amount: 2129,
-	category: 'Eletronics',
-	type: 'income',
-	when: '2022-08-18T18:59:00Z'
-}]
+type Transaction = DTMoney.Transaction
 
 export function TransactionsTable() {
+  const { transactions } = useContext(TransactionsContext)
   const renderTransaction = (transaction: Transaction) => {
 	  const signal = transaction.type === 'expense' ? '-$ ' : '$ '
-	  const formatedWhen = new Intl.DateTimeFormat('en-US', { dateStyle:'medium'}).format(new Date(transaction.when))
+	  const formatedWhen = new Intl.DateTimeFormat('en-US', { dateStyle:'medium'}).format(new Date(transaction.created_at))
 	  return (
 		  <tr key={transaction.id}>
 			  <td>
@@ -46,7 +28,7 @@ export function TransactionsTable() {
 				  <PriceHighlight variant={
 					  transaction.type
 					}>
-					  {`${signal}${transaction.amount.toFixed(2)}`}
+					  {`${signal}${transaction.ammount.toFixed(2)}`}
 					</PriceHighlight>
 				</td>
 
