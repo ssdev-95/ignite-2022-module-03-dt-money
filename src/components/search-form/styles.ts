@@ -37,7 +37,7 @@ export const SearchButton = styled.button`
 	background: transparent;
 	color: ${(props) => props.theme['green-300']};
 
-	&:active {
+	&:not(:disabled):active {
 		border-color: ${(props) => props.theme['green-500']};
 	
 		background-color: ${(props) => props.theme['green-500']};
@@ -56,7 +56,7 @@ export const SearchButton = styled.button`
 	}
 
 	@media(min-width:870px) {
-		&:hover {
+		&:not(:disabled):hover {
 			border-color: ${(props) => props.theme['green-500']};
 
 			background-color: ${(props) => props.theme['green-500']};

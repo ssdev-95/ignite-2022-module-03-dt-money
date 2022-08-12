@@ -25,6 +25,11 @@ export const GlobalStyle = createGlobalStyle`
 	button {
 		border: 0;
 		cursor: pointer;
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
 	}
 
 	#root {

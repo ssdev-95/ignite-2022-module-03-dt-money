@@ -16,8 +16,6 @@ declare namespace DTMoney {
 
 	export interface TransactionContextData {
 		transactions:Transaction[]
-		setTransactions:UpdateState<Transaction[]>
+		queryTransactions: (text:string) => void
 	}
-
-	export type UpdateState<T> = Dispatch<SetStateAction<T>>
 }

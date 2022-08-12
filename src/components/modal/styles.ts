@@ -55,12 +55,12 @@ export const ModalContent = styled.form`
 
 		margin-top: 1.5rem;
 
-		&:active {
+		&:not(:disabled):active {
 			background-color: ${(props) => props.theme['green-500']};
 		}
 
 		@media(min-width:870px) {
-			&:hover {
+			&:not(:disabled):hover {
 				background-color: ${(props) => props.theme['green-500']};
 			}
 		}

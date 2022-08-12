@@ -1,6 +1,9 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
+import { useForm } from 'react-hook-form'
+
 import { ArrowCircleDown, ArrowCircleUp, X as IconX } from 'phosphor-react'
+
 import {
   TransactionTypeContainer,
   TransactionTypeButton,
@@ -10,13 +13,28 @@ import {
 	CloseButton
 } from './styles'
 
+import { newTransactionFormSchema, NewTransactionFormInputs, zodResolver } from '../../services/zod'
+
 type ModalProps = {
   children:ReactNode
 }
 
-type Types = 'income' | 'expense'
-
 export function Modal( {children }: ModalProps) {
+  const {
+	  register,
+		handleSubmit,
+		reset,
+		formState: { isSubmitting }
+	} = useForm<NewTransactionFormInputs>({
+	  resolver: zodResolver(newTransactionFormSchema)
+	})
+
+  function handleAddNewTransaction(data:NewTransactionFormInputs) {
+	  console.log(data)
+
+		setTimeout(reset, 750)
+	}
+
   return (
 		<Dialog.Root>
 		  <Dialog.Trigger asChild>
@@ -35,12 +53,28 @@ export function Modal( {children }: ModalProps) {
   				  <IconX size={24} />
 					</CloseButton>
 
-					<ModalContent onSubmit={e => e.preventDefault()}>
-					  <input placeholder="Description" />
-						<input placeholder="Ammount without signal" />
-						<input placeholder="Category" />
+					<ModalContent onSubmit={
+					  handleSubmit(handleAddNewTransaction)
+					}>
+					  <input
+						  placeholder="Description"
+							{...register('description')}
+						/>
+						<input
+						  placeholder="Ammount without signal"
+							{...register(
+							  'ammount',
+								{ valueAsNumber: true }
+							)}
+						/>
+						<input
+						  placeholder="Category"
+							{...register('category')}
+						/>
 
-						<TransactionTypeContainer>
+						<TransactionTypeContainer
+						  {...register('type')}
+						>
 						  <TransactionTypeButton
 							  variant="income"
 								value="income"
@@ -58,7 +92,12 @@ export function Modal( {children }: ModalProps) {
 							</TransactionTypeButton>
 						</TransactionTypeContainer>
 
-						<button type="submit">Register</button>
+						<button
+					    type="submit"
+							disabled={isSubmitting}
+						>
+						  Register
+						</button>
 					</ModalContent>
 				</ModalContainer>
 			</Dialog.Portal>
