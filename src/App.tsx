@@ -3,8 +3,8 @@ import { Home } from './pages/home'
 
 export function App() {
   return (
-	  <TransactionsProvider>
-		  <Home />
-		</TransactionsProvider>
-	)
+    <TransactionsProvider>
+      <Home />
+    </TransactionsProvider>
+  )
 }

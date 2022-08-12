@@ -4,10 +4,10 @@ import { TransactionsTable } from '../components/transactions-table'
 
 export function Home() {
   return (
-	  <>
-		  <Header />
-			<Summary />
-			<TransactionsTable />
-		</>
-	)
+    <>
+      <Header />
+      <Summary />
+      <TransactionsTable />
+    </>
+  )
 }

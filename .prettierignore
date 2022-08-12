@@ -1,0 +1,9 @@
+node_modules
+vite.config.ts
+*.json
+*.d.ts
+*.css
+*.scss
+dist
+build
+public

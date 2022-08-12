@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-		"typeRoots": ["node_modules", "./src/@types"]
+    "typeRoots": ["node_modules", "./src/@types"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

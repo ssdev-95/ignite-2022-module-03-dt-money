@@ -8,23 +8,16 @@ export function Header() {
   const theme = useTheme()
 
   return (
-	  <Basis>
-		  <nav>
-  		  <img
-  			  src={LogoIcon}
-  			  alt="An arrow like icon with the words dt money."
-  			/>
-  			<Modal>
-				  <Button>
-					  <PlusCircle
-						  className="svg"
-			  			color={theme.white}
-	  					size={24}
-  					/>
-					  <span>New transaction</span>
-  				</Button>
-  			</Modal>
-			</nav>
-		</Basis>
-	)
+    <Basis>
+      <nav>
+        <img src={LogoIcon} alt="An arrow like icon with the words dt money." />
+        <Modal>
+          <Button>
+            <PlusCircle className="svg" color={theme.white} size={24} />
+            <span>New transaction</span>
+          </Button>
+        </Modal>
+      </nav>
+    </Basis>
+  )
 }

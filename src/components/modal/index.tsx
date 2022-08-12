@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 
 import { ArrowCircleDown, ArrowCircleUp, X as IconX } from 'phosphor-react'
 
@@ -8,99 +8,96 @@ import {
   TransactionTypeContainer,
   TransactionTypeButton,
   ModalContainer,
-	ModalOverlay,
-	ModalContent,
-	CloseButton
+  ModalOverlay,
+  ModalContent,
+  CloseButton,
 } from './styles'
 
-import { newTransactionFormSchema, NewTransactionFormInputs, zodResolver } from '../../services/zod'
+import { useSummary } from '../../hooks/useSummary'
+import {
+  newTransactionFormSchema,
+  NewTransactionFormInputs,
+  zodResolver,
+} from '../../services/zod'
 
 type ModalProps = {
-  children:ReactNode
+  children: ReactNode
 }
 
-export function Modal( {children }: ModalProps) {
+export function Modal({ children }: ModalProps) {
+  const { createNewTransaction } = useSummary()
+
   const {
-	  register,
-		handleSubmit,
-		reset,
-		formState: { isSubmitting }
-	} = useForm<NewTransactionFormInputs>({
-	  resolver: zodResolver(newTransactionFormSchema)
-	})
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { isSubmitting },
+  } = useForm<NewTransactionFormInputs>({
+    resolver: zodResolver(newTransactionFormSchema),
+    defaultValues: { type: 'income', ammount: 0 },
+  })
 
-  function handleAddNewTransaction(data:NewTransactionFormInputs) {
-	  console.log(data)
+  function handleAddNewTransaction(data: NewTransactionFormInputs) {
+    createNewTransaction(data)
 
-		setTimeout(reset, 750)
-	}
+    setTimeout(reset, 750)
+  }
 
   return (
-		<Dialog.Root>
-		  <Dialog.Trigger asChild>
-			  {children}
-		  </Dialog.Trigger>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-			<Dialog.Portal>
-			  <ModalOverlay />
-			  
-				<ModalContainer>
-				  <Dialog.Title>
-					  New Transaction
-					</Dialog.Title>
+      <Dialog.Portal>
+        <ModalOverlay />
 
-  				<CloseButton>
-  				  <IconX size={24} />
-					</CloseButton>
+        <ModalContainer>
+          <Dialog.Title>New Transaction</Dialog.Title>
 
-					<ModalContent onSubmit={
-					  handleSubmit(handleAddNewTransaction)
-					}>
-					  <input
-						  placeholder="Description"
-							{...register('description')}
-						/>
-						<input
-						  placeholder="Ammount without signal"
-							{...register(
-							  'ammount',
-								{ valueAsNumber: true }
-							)}
-						/>
-						<input
-						  placeholder="Category"
-							{...register('category')}
-						/>
+          <CloseButton>
+            <IconX size={24} />
+          </CloseButton>
 
-						<TransactionTypeContainer
-						  {...register('type')}
-						>
-						  <TransactionTypeButton
-							  variant="income"
-								value="income"
-							>
-							  <ArrowCircleUp size={24} />
-							  <span>Icome</span>
-							</TransactionTypeButton>
+          <ModalContent onSubmit={handleSubmit(handleAddNewTransaction)}>
+            <input
+              placeholder="Description"
+              required
+              {...register('description')}
+            />
+            <input
+              placeholder="Ammount without signal"
+              required
+              {...register('ammount', { valueAsNumber: true })}
+            />
+            <input placeholder="Category" required {...register('category')} />
 
-							<TransactionTypeButton
-							  variant="expense"
-								value="expense"
-							>
-							  <ArrowCircleDown size={24} />
-							  <span>Expense</span>
-							</TransactionTypeButton>
-						</TransactionTypeContainer>
+            <Controller
+              control={control}
+              name="type"
+              render={({ field }) => (
+                <TransactionTypeContainer
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  <TransactionTypeButton variant="income" value="income">
+                    <ArrowCircleUp size={24} />
+                    <span>Icome</span>
+                  </TransactionTypeButton>
 
-						<button
-					    type="submit"
-							disabled={isSubmitting}
-						>
-						  Register
-						</button>
-					</ModalContent>
-				</ModalContainer>
-			</Dialog.Portal>
-		</Dialog.Root>
-	)
+                  <TransactionTypeButton variant="expense" value="expense">
+                    <ArrowCircleDown size={24} />
+                    <span>Expense</span>
+                  </TransactionTypeButton>
+                </TransactionTypeContainer>
+              )}
+            />
+
+            <button type="submit" disabled={isSubmitting}>
+              Register
+            </button>
+          </ModalContent>
+        </ModalContainer>
+      </Dialog.Portal>
+    </Dialog.Root>
+  )
 }
