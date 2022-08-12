@@ -27,9 +27,9 @@ type ModalProps = {
 
 export function Modal({ children }: ModalProps) {
   const createNewTransaction = useContextSelector(
-	  TransactionsContext,
-		(context) => context.createNewTransaction
-	)
+    TransactionsContext,
+    (context) => context.createNewTransaction,
+  )
 
   const {
     register,

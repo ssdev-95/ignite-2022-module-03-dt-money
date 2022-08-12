@@ -20,11 +20,12 @@ export function SearchForm() {
     formState: { isSubmitting },
   } = useForm<SearchFormInputs>({ resolver: zodResolver(searchFormSchema) })
   const { fetchTransactions, transactions } = useContextSelector(
-	  TransactionsContext,
-		({ fetchTransactions, transactions }) => ({
-		  fetchTransactions, transactions
-		})
-	)
+    TransactionsContext,
+    ({ fetchTransactions, transactions }) => ({
+      fetchTransactions,
+      transactions,
+    }),
+  )
 
   function handleSearchTransactions(data: SearchFormInputs) {
     fetchTransactions(data.query)

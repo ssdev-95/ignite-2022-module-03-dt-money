@@ -3,9 +3,9 @@ import { TransactionsContext } from '../contexts/transactions'
 
 export function useSummary() {
   const transactions = useContextSelector(
-		TransactionsContext,
-		(context) => context.transactions
-	)
+    TransactionsContext,
+    (context) => context.transactions,
+  )
   const summary = transactions.reduce(
     (acc, curr) => {
       if (curr.type === 'income') {
