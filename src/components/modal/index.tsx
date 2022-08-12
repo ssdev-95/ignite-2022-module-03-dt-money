@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useForm, Controller } from 'react-hook-form'
-
+import { useContextSelector } from 'use-context-selector'
 import { ArrowCircleDown, ArrowCircleUp, X as IconX } from 'phosphor-react'
 
 import {
@@ -13,7 +13,8 @@ import {
   CloseButton,
 } from './styles'
 
-import { useSummary } from '../../hooks/useSummary'
+import { TransactionsContext } from '../../contexts/transactions'
+
 import {
   newTransactionFormSchema,
   NewTransactionFormInputs,
@@ -25,7 +26,10 @@ type ModalProps = {
 }
 
 export function Modal({ children }: ModalProps) {
-  const { createNewTransaction } = useSummary()
+  const createNewTransaction = useContextSelector(
+	  TransactionsContext,
+		(context) => context.createNewTransaction
+	)
 
   const {
     register,

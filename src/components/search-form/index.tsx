@@ -1,9 +1,11 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { MagnifyingGlass } from 'phosphor-react'
-import { useSummary } from '../../hooks/useSummary'
+import { useContextSelector } from 'use-context-selector'
+import { TransactionsContext } from '../../contexts/transactions'
 
 import { FormContainer, SearchButton } from './styles'
-import { useEffect } from 'react'
+
 import {
   SearchFormInputs,
   searchFormSchema,
@@ -17,7 +19,12 @@ export function SearchForm() {
     reset,
     formState: { isSubmitting },
   } = useForm<SearchFormInputs>({ resolver: zodResolver(searchFormSchema) })
-  const { fetchTransactions, transactions } = useSummary()
+  const { fetchTransactions, transactions } = useContextSelector(
+	  TransactionsContext,
+		({ fetchTransactions, transactions }) => ({
+		  fetchTransactions, transactions
+		})
+	)
 
   function handleSearchTransactions(data: SearchFormInputs) {
     fetchTransactions(data.query)

@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { createContext } from 'use-context-selector'
 import { api } from '../services/api'
 import { DTMoney } from '../@types/dt-money'
 
@@ -8,34 +9,39 @@ type ContextData = DTMoney.TransactionContextData
 
 type Transaction = DTMoney.Transaction
 
+type NewTransactionProps = Omit<Transaction, 'id' | 'created_at'>
+
 export const TransactionsContext = createContext({} as ContextData)
 
 export function TransactionsProvider({ children }: ProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  async function fetchTransactions(query?: string) {
-    const res = await api.get('transactions', {
-      params: {
-        _sort: 'created_at',
-        _order: 'desc',
-        q: query,
-      },
-    })
+  const fetchTransactions = useCallback(
+	  async (query?: string) => {
+      const res = await api.get('transactions', {
+        params: {
+          _sort: 'created_at',
+          _order: 'desc',
+          q: query,
+        },
+      })
 
-    setTransactions(res.data)
-  }
+      setTransactions(res.data)
+    },[]
+	)
 
-  async function createNewTransaction(
-    transaction: Omit<Transaction, 'id' | 'created_at'>,
-  ) {
-    const res = await api.post('transactions', {
-      ...transaction,
-      id: `${transaction.type}-${Date.now()}`,
-      created_at: new Date().toISOString(),
-    })
-
-    setTransactions((prev) => [res.data, ...prev])
-  }
+  const createNewTransaction = useCallback(
+	  async (transaction: NewTransactionProps) => {
+      const res = await api.post('transactions', {
+        ...transaction,
+        id: `${transaction.type}-${Date.now()}`,
+        created_at: new Date().toISOString(),
+      })
+ 
+      setTransactions((prev) => [res.data, ...prev])
+    },
+	  []
+	)
 
   useEffect(() => {
     fetchTransactions()
